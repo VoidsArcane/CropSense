@@ -4,7 +4,7 @@
 ## Get latest from `dotnet new gitignore`
 
 # Auto-Generated HTML reports in Development
-CropSense/report.html
+CropSense/CropSense/*.html
 
 # dotenv files
 .env
