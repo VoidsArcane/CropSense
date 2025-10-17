@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# Auto-Generated HTML reports in Development
+.html
+
 # dotenv files
 .env
 
