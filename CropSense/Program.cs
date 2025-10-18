@@ -34,9 +34,9 @@ StringBuilder stringBuilder = new StringBuilder();
 stringBuilder.Append("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css\">");
 
 stringBuilder.Append("<table class=\"table table-striped table-hover table-bordered\"><thead class=\"table-dard\"><th>Date</th>");
-stringBuilder.Append("<th>Min Temp</th><th>Max Temp</th><th>Snow</th><th>Rain</th>");
-stringBuilder.Append("<th>ET₀</th>");
-stringBuilder.Append("<th>Shortwave Radiation</th><th>Wind Gusts</th>");
+stringBuilder.Append("<th>Min Temp (°C)</th><th>Max Temp (°C)</th><th>Snow (mm)</th><th>Rain (mm)</th>");
+stringBuilder.Append("<th>ET₀ (mm)</th>");
+stringBuilder.Append("<th>Shortwave Radiation (MJ/m²)</th><th>Wind Gusts (km/h)</th>");
 stringBuilder.Append("</thead><tbody>");
 
 for (int i = 0; i < root.GetProperty("time").EnumerateArray().Count(); i++)
