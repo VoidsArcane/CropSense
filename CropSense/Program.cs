@@ -19,6 +19,7 @@ string json = await response.Content.ReadAsStringAsync();
 using JsonDocument doc = JsonDocument.Parse(json);
 JsonElement root = doc.RootElement.GetProperty("daily");
 
+/*
 // Printing out the JSON (DEBUG)
 string prettyJson = JsonSerializer.Serialize(root, new JsonSerializerOptions
 {
@@ -26,58 +27,66 @@ string prettyJson = JsonSerializer.Serialize(root, new JsonSerializerOptions
 });
 
 Console.WriteLine(prettyJson);
-
+*/
 // Generating Report
 StringBuilder stringBuilder = new StringBuilder();
 
+stringBuilder.Append("<table><thead><th>Date</th><th>Weather</th><th>Mean Temp</th>");
+stringBuilder.Append("<th>Min Temp</th><th>Max Temp</th><th>Snow</th><th>Rain</th>");
+stringBuilder.Append("<th>Precipitation %</th><th>EV0</th><th>Sunshine Duration</th>");
+stringBuilder.Append("<th>Shortwave Radiation</th><th>Max Wind Gusts</th><th>Wind</th>");
+stringBuilder.Append("<th>Cloud Cover</th><th>Humidity</th><th>Notes</th></thead><tbody>");
+
 for (int i = 0; i < root.GetProperty("time").EnumerateArray().Count(); i++)
 {
+	stringBuilder.Append("<tr>");
 	string? date = root.GetProperty("time").EnumerateArray().ElementAt(i).GetString();
-	stringBuilder.Append("<p>Date : " + date + "</p>");
+	stringBuilder.Append("<td>" + date + "</td>");
 
 	int weatherCode = root.GetProperty("weather_code").EnumerateArray().ElementAt(i).GetInt32();
-	stringBuilder.Append("<p> Weather Code: " + weatherCode + "</p>");
+	stringBuilder.Append("<td>" + weatherCode + "</td>");
 
 	float temperatureMean = root.GetProperty("temperature_2m_mean").EnumerateArray().ElementAt(i).GetSingle();
 	float tempMax = root.GetProperty("temperature_2m_max").EnumerateArray().ElementAt(i).GetSingle();
 	float tempMin = root.GetProperty("temperature_2m_min").EnumerateArray().ElementAt(i).GetSingle();
-	stringBuilder.Append("<p> Min Temp : " + tempMin + " | Max Temp : " + tempMax + " | Mean Temp: " + temperatureMean + " </p>");
+	stringBuilder.Append("<td>" + temperatureMean + "</td>");
+	stringBuilder.Append("<td>" + tempMin + "</td>");
+	stringBuilder.Append("<td>" + tempMax + "</td>");
 
 	double snowfallSum = root.GetProperty("snowfall_sum").EnumerateArray().ElementAt(i).GetDouble();
-	stringBuilder.Append("<p> Snow : " + snowfallSum + "</p>");
+	stringBuilder.Append("<td>" + snowfallSum + "</td>");
 
 	double precipitationSum = root.GetProperty("precipitation_sum").EnumerateArray().ElementAt(i).GetDouble();
 	double rainSum = precipitationSum - snowfallSum;
-	stringBuilder.Append("<p> Rain : " + rainSum + "</p>");
+	stringBuilder.Append("<td>" + rainSum + "</td>");
 
 	int PrecipitationProbability = root.GetProperty("precipitation_probability_max").EnumerateArray().ElementAt(i).GetInt32();
-	stringBuilder.Append("<p> Precipitation Probability Max : " + PrecipitationProbability + "</p>");
+	stringBuilder.Append("<td>" + PrecipitationProbability + "</td>");
 
 	double evapotranspiration = root.GetProperty("et0_fao_evapotranspiration").EnumerateArray().ElementAt(i).GetDouble();
-	stringBuilder.Append("<p> Evapotranspiration : " + evapotranspiration + "</p>");
+	stringBuilder.Append("<td>" + evapotranspiration + "</td>");
 
 	double sunshineDuration = Math.Round(root.GetProperty("sunshine_duration").EnumerateArray().ElementAt(i).GetDouble() / 3600, 2);
-	stringBuilder.Append("<p> Sunshine duration : " + sunshineDuration + "</p>");
+	stringBuilder.Append("<td>" + sunshineDuration + "</td>");
 
 	double shortwaveRadiationSum = root.GetProperty("shortwave_radiation_sum").EnumerateArray().ElementAt(i).GetDouble();
-	stringBuilder.Append("<p> Shortwave Radiation : " + shortwaveRadiationSum + "</p>");
+	stringBuilder.Append("<td>" + shortwaveRadiationSum + "</td>");
 
 	float windGustsMax = root.GetProperty("wind_gusts_10m_max").EnumerateArray().ElementAt(i).GetSingle();
-	stringBuilder.Append("<p> Wind Gusts Max : " + windGustsMax + "</p>");
+	stringBuilder.Append("<td>" + windGustsMax + "</td>");
 
 	float windSpeed = root.GetProperty("wind_speed_10m_mean").EnumerateArray().ElementAt(i).GetSingle();
-	stringBuilder.Append("<p> Wind Speed : " + windSpeed + "</p>");
+	stringBuilder.Append("<td>" + windSpeed + "</td>");
 
 	int cloudCover = root.GetProperty("cloud_cover_mean").EnumerateArray().ElementAt(i).GetInt32();
-	stringBuilder.Append("<p> Cloud Cover Mean : " + cloudCover + "</p>");
+	stringBuilder.Append("<td>" + cloudCover + "</td>");
 
 	int relativeHumidity = root.GetProperty("relative_humidity_2m_mean").EnumerateArray().ElementAt(i).GetInt32();
-	stringBuilder.Append("<p> Relative Humidity Mean : " + relativeHumidity + "</p>");
-
-	stringBuilder.Append("<hr>");
-
+	stringBuilder.Append("<td>" + relativeHumidity + "</td>");
+	stringBuilder.Append("</tr>");
 }
 
+stringBuilder.Append("</tbody></table>");
 string reportFilePath = "report.html";
 System.IO.File.WriteAllText(reportFilePath, stringBuilder.ToString());
 
