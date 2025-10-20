@@ -126,44 +126,6 @@ if (reportType == "html")
 
 }
 
-/*
-for (int i = 0; i < root.GetProperty("time").EnumerateArray().Count(); i++)
-{
-
-	string? date = root.GetProperty("time").EnumerateArray().ElementAt(i).GetString();
-	float maxTemp = 0;
-	float minTemp = 0;
-	float windGusts = 0;
-	double snow = 0;
-	double totalPrecipitation = 0;
-	double evapotranspiration = 0;
-	double shortwaveRadiation = 0;
-
-	var tempElement = root.GetProperty("temperature_2m_max").EnumerateArray().ElementAt(i);
-	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetSingle(out maxTemp);
-
-	tempElement = root.GetProperty("temperature_2m_min").EnumerateArray().ElementAt(i);
-	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetSingle(out minTemp);
-
-	tempElement = root.GetProperty("wind_gusts_10m_max").EnumerateArray().ElementAt(i);
-	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetSingle(out windGusts);
-
-	tempElement = root.GetProperty("snowfall_sum").EnumerateArray().ElementAt(i);
-	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetDouble(out snow);
-
-	tempElement = root.GetProperty("precipitation_sum").EnumerateArray().ElementAt(i);
-	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetDouble(out totalPrecipitation);
-
-	tempElement = root.GetProperty("et0_fao_evapotranspiration").EnumerateArray().ElementAt(i);
-	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetDouble(out evapotranspiration);
-
-	tempElement = root.GetProperty("shortwave_radiation_sum").EnumerateArray().ElementAt(i);
-	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetDouble(out shortwaveRadiation);
-
-
-	double rain = totalPrecipitation - snow;
-	*/
-
 if (reportType == "html")
 {
 	for (int i = 0; i < data.First().Value.EnumerateArray().Count(); i++)
@@ -177,23 +139,7 @@ if (reportType == "html")
 	}
 
 }
-		/*
-				string? minTempColor = minTemp <= 5 ? "color: red;" : minTemp <= 10 ? "color: orange;" : "";
-				string? windGustColor = windGusts >= 50 ? "color: red;" : "";
-				stringBuilder.Append("<tr>");
-				stringBuilder.Append($"<td>{date}</td>");
-				stringBuilder.Append($"<td style='{minTempColor}'> {minTemp} </td>");
-				stringBuilder.Append($"<td>{maxTemp}</td>");
-				stringBuilder.Append($"<td>{snow}</td>");
-				stringBuilder.Append($"<td>{rain}</td>");
-				stringBuilder.Append($"<td>{evapotranspiration}</td>");
-				stringBuilder.Append($"<td>{shortwaveRadiation}</td>");
-				stringBuilder.Append($"<td style='{windGustColor}'>{windGusts}</td>");
-				stringBuilder.Append("</tr>");
-		
-	}
-
-}*/
+	
 if (reportType == "html") stringBuilder.Append("</tbody></table>");
 
 // Creating and Opening Report
