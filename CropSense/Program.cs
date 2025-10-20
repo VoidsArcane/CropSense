@@ -5,19 +5,66 @@ using System.Text;
 using System.Diagnostics;
 using System.Linq;
 
+// Parsing Config
+string iniPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini");
+
+var lines = File.ReadAllLines(iniPath);
+string section = "";
+var config = new Dictionary<string, Dictionary<string, string>>();
+
+foreach (var line in lines)
+{
+    string trimmed = line.Trim();
+    if (trimmed.StartsWith("[") && trimmed.EndsWith("]"))
+    {
+        section = trimmed[1..^1];
+        config[section] = new Dictionary<string, string>();
+    }
+    else if (trimmed.Contains('=') && !trimmed.StartsWith(";"))
+    {
+        var parts = trimmed.Split('=', 2);
+        config[section][parts[0].Trim()] = parts[1].Trim();
+    }
+}
+
+string location = config["general"]["location"];
+
+
 // Fetching Data from API
 using HttpClient client = new HttpClient();
 
-string url = "https://api.open-meteo.com/v1/forecast?latitude=37.945&longitude=23.7142&daily=temperature_2m_max,temperature_2m_min,rain_sum,snowfall_sum,precipitation_sum,wind_gusts_10m_max,shortwave_radiation_sum,et0_fao_evapotranspiration&timezone=auto";
+// Fetching Latitude and Longitude for confic location
+double latitude = 0.00;
+double longitude = 0.00;
 
-HttpResponseMessage response = await client.GetAsync(url);
+HttpResponseMessage response = await client.GetAsync($"https://geocoding-api.open-meteo.com/v1/search?name={location}&count=1&language=en");
+response.EnsureSuccessStatusCode();
+
+string locationData = await response.Content.ReadAsStringAsync();
+
+using JsonDocument locationJSON = JsonDocument.Parse(locationData);
+JsonElement root = locationJSON.RootElement.GetProperty("results").EnumerateArray().ElementAt(0);
+latitude = root.GetProperty("latitude").GetDouble();
+longitude = root.GetProperty("longitude").GetDouble();
+
+Console.WriteLine($"latitude: {latitude}, longitude: {longitude}");
+
+/*
+var options = new JsonSerializerOptions { WriteIndented = true };
+string prettyJson = JsonSerializer.Serialize(root, options);
+*/
+
+
+string url = $"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&daily=temperature_2m_max,temperature_2m_min,rain_sum,snowfall_sum,precipitation_sum,wind_gusts_10m_max,shortwave_radiation_sum,et0_fao_evapotranspiration&timezone=auto";
+
+response = await client.GetAsync(url);
 response.EnsureSuccessStatusCode();
 
 string json = await response.Content.ReadAsStringAsync();
 
 // Parsing out Relevant Data
 using JsonDocument doc = JsonDocument.Parse(json);
-JsonElement root = doc.RootElement.GetProperty("daily");
+root = doc.RootElement.GetProperty("daily");
 
 // Generating Report
 StringBuilder stringBuilder = new StringBuilder();
