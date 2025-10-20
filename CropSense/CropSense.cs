@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Json.Nodes;
 
 // Parsing Config
 string iniPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini");
@@ -77,35 +78,58 @@ var options = new JsonSerializerOptions { WriteIndented = true };
 string prettyJson = JsonSerializer.Serialize(doc, options);
 */
 
+// Extracting Variables
+Console.Write(root);
+Dictionary<string, JsonElement> data = new Dictionary<string, JsonElement>();
+foreach (JsonProperty prop in root.EnumerateObject())
+{
+	data.Add(prop.Name, prop.Value);
+}
+
 // Generating Report
 StringBuilder stringBuilder = new StringBuilder();
+
+
+
+if (reportType == "csv")
+{
+	foreach (string key in data.Keys)
+	{
+		stringBuilder.Append(key);
+		if (key != data.Keys.Last()) stringBuilder.Append(",");
+	}
+	stringBuilder.AppendLine();
+
+	for (int i = 0; i < data.First().Value.EnumerateArray().Count(); i++)
+	{
+		foreach (JsonElement array in data.Values)
+		{
+			stringBuilder.Append(array.EnumerateArray().ElementAt(i));
+			if (!array.Equals(data.Values.Last())) stringBuilder.Append(",");
+		}
+		stringBuilder.AppendLine();
+	}
+
+}
 
 if (reportType == "html")
 {
 	stringBuilder.Append("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css\">");
-	stringBuilder.Append("<table class=\"table table-striped table-hover table-bordered\"><thead class=\"table-dark\"><th>Date</th>");
-	stringBuilder.Append("<th>Min Temp (°C)</th><th>Max Temp (°C)</th><th>Snow (mm)</th><th>Rain (mm)</th>");
-	stringBuilder.Append("<th>ET₀ (mm)</th>");
-	stringBuilder.Append("<th>Shortwave Radiation (MJ/m²)</th><th>Wind Gusts (km/h)</th>");
-	stringBuilder.Append("</thead><tbody>");
-}
-
-if (reportType == "csv")
-{
-	JsonProperty[] props = root.EnumerateObject().ToArray();
-	for (int i = 0; i < props.Length; i++)
+	stringBuilder.Append("<table class=\"table table-striped table-hover table-bordered\"><thead class=\"table-dark\">");
+	
+	foreach (string key in data.Keys)
 	{
-		if (props[i].Name != "rain_sum")
-		{
-			stringBuilder.Append(props[i].Name);
-			if (i != props.Length - 1) stringBuilder.Append(",");
-		}
+		stringBuilder.Append($"<th>{key}</th>");
 	}
-	stringBuilder.AppendLine();
+	
+	stringBuilder.Append("</thead><tbody>");
+
 }
 
+/*
 for (int i = 0; i < root.GetProperty("time").EnumerateArray().Count(); i++)
 {
+
 	string? date = root.GetProperty("time").EnumerateArray().ElementAt(i).GetString();
 	float maxTemp = 0;
 	float minTemp = 0;
@@ -138,29 +162,38 @@ for (int i = 0; i < root.GetProperty("time").EnumerateArray().Count(); i++)
 
 
 	double rain = totalPrecipitation - snow;
+	*/
 
-
-	if (reportType == "html")
+if (reportType == "html")
+{
+	for (int i = 0; i < data.First().Value.EnumerateArray().Count(); i++)
 	{
-		string? minTempColor = minTemp <= 5 ? "color: red;" : minTemp <= 10 ? "color: orange;" : "";
-		string? windGustColor = windGusts >= 50 ? "color: red;" : "";
 		stringBuilder.Append("<tr>");
-		stringBuilder.Append($"<td>{date}</td>");
-		stringBuilder.Append($"<td style='{minTempColor}'> {minTemp} </td>");
-		stringBuilder.Append($"<td>{maxTemp}</td>");
-		stringBuilder.Append($"<td>{snow}</td>");
-		stringBuilder.Append($"<td>{rain}</td>");
-		stringBuilder.Append($"<td>{evapotranspiration}</td>");
-		stringBuilder.Append($"<td>{shortwaveRadiation}</td>");
-		stringBuilder.Append($"<td style='{windGustColor}'>{windGusts}</td>");
+		foreach (JsonElement array in data.Values)
+		{
+			stringBuilder.Append($"<td>{array.EnumerateArray().ElementAt(i)}</td>");
+		}
 		stringBuilder.Append("</tr>");
 	}
-	
-	if (reportType == "csv")
-	{
-		stringBuilder.AppendLine($"{date},{minTemp},{maxTemp},{snow},{rain},{evapotranspiration},{shortwaveRadiation},{windGusts}");
-	}
+
 }
+		/*
+				string? minTempColor = minTemp <= 5 ? "color: red;" : minTemp <= 10 ? "color: orange;" : "";
+				string? windGustColor = windGusts >= 50 ? "color: red;" : "";
+				stringBuilder.Append("<tr>");
+				stringBuilder.Append($"<td>{date}</td>");
+				stringBuilder.Append($"<td style='{minTempColor}'> {minTemp} </td>");
+				stringBuilder.Append($"<td>{maxTemp}</td>");
+				stringBuilder.Append($"<td>{snow}</td>");
+				stringBuilder.Append($"<td>{rain}</td>");
+				stringBuilder.Append($"<td>{evapotranspiration}</td>");
+				stringBuilder.Append($"<td>{shortwaveRadiation}</td>");
+				stringBuilder.Append($"<td style='{windGustColor}'>{windGusts}</td>");
+				stringBuilder.Append("</tr>");
+		
+	}
+
+}*/
 if (reportType == "html") stringBuilder.Append("</tbody></table>");
 
 // Creating and Opening Report
