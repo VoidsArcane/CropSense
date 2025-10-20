@@ -28,7 +28,7 @@ foreach (var line in lines)
 }
 
 string location = config["general"]["location"];
-
+string forecast_days = config["general"]["forecast_days"];
 
 // Fetching Data from API
 using HttpClient client = new HttpClient();
@@ -47,24 +47,24 @@ JsonElement root = locationJSON.RootElement.GetProperty("results").EnumerateArra
 latitude = root.GetProperty("latitude").GetDouble();
 longitude = root.GetProperty("longitude").GetDouble();
 
-Console.WriteLine($"latitude: {latitude}, longitude: {longitude}");
-
-/*
-var options = new JsonSerializerOptions { WriteIndented = true };
-string prettyJson = JsonSerializer.Serialize(root, options);
-*/
 
 
-string url = $"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&daily=temperature_2m_max,temperature_2m_min,rain_sum,snowfall_sum,precipitation_sum,wind_gusts_10m_max,shortwave_radiation_sum,et0_fao_evapotranspiration&timezone=auto";
+
+
+
+string url = $"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&daily=temperature_2m_max,temperature_2m_min,rain_sum,snowfall_sum,precipitation_sum,wind_gusts_10m_max,shortwave_radiation_sum,et0_fao_evapotranspiration&timezone=auto&forecast_days={forecast_days}";
 
 response = await client.GetAsync(url);
 response.EnsureSuccessStatusCode();
 
 string json = await response.Content.ReadAsStringAsync();
-
-// Parsing out Relevant Data
 using JsonDocument doc = JsonDocument.Parse(json);
 root = doc.RootElement.GetProperty("daily");
+
+/*
+var options = new JsonSerializerOptions { WriteIndented = true };
+string prettyJson = JsonSerializer.Serialize(doc, options);
+*/
 
 // Generating Report
 StringBuilder stringBuilder = new StringBuilder();
@@ -76,20 +76,43 @@ stringBuilder.Append("<th>ET₀ (mm)</th>");
 stringBuilder.Append("<th>Shortwave Radiation (MJ/m²)</th><th>Wind Gusts (km/h)</th>");
 stringBuilder.Append("</thead><tbody>");
 
+
 for (int i = 0; i < root.GetProperty("time").EnumerateArray().Count(); i++)
 {
 	string? date = root.GetProperty("time").EnumerateArray().ElementAt(i).GetString();
-	float maxTemp = root.GetProperty("temperature_2m_max").EnumerateArray().ElementAt(i).GetSingle();
-	float minTemp = root.GetProperty("temperature_2m_min").EnumerateArray().ElementAt(i).GetSingle();
-	float windGusts = root.GetProperty("wind_gusts_10m_max").EnumerateArray().ElementAt(i).GetSingle();
-	double snow = root.GetProperty("snowfall_sum").EnumerateArray().ElementAt(i).GetDouble();
-	double totalPrecipitation = root.GetProperty("precipitation_sum").EnumerateArray().ElementAt(i).GetDouble();
-	double rain = totalPrecipitation - snow;
-	double evapotranspiration = root.GetProperty("et0_fao_evapotranspiration").EnumerateArray().ElementAt(i).GetDouble();
-	double shortwaveRadiation = root.GetProperty("shortwave_radiation_sum").EnumerateArray().ElementAt(i).GetDouble();
+	float maxTemp = 0;
+	float minTemp = 0;
+	float windGusts = 0;
+	double snow = 0;
+	double totalPrecipitation = 0;
+	double evapotranspiration = 0;
+	double shortwaveRadiation = 0;
 
-	string minTempColor = minTemp <= 5 ? "color: red;" : minTemp <= 10 ? "color: orange;" : "";
-	string windGustColor = windGusts >= 50 ? "color: red;" : "";
+	var tempElement = root.GetProperty("temperature_2m_max").EnumerateArray().ElementAt(i);
+	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetSingle(out maxTemp);
+
+	tempElement = root.GetProperty("temperature_2m_min").EnumerateArray().ElementAt(i);
+	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetSingle(out minTemp);
+
+	tempElement = root.GetProperty("wind_gusts_10m_max").EnumerateArray().ElementAt(i);
+	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetSingle(out windGusts);
+
+	tempElement = root.GetProperty("snowfall_sum").EnumerateArray().ElementAt(i);
+	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetDouble(out snow);
+
+	tempElement = root.GetProperty("precipitation_sum").EnumerateArray().ElementAt(i);
+	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetDouble(out totalPrecipitation);
+
+	tempElement = root.GetProperty("et0_fao_evapotranspiration").EnumerateArray().ElementAt(i);
+	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetDouble(out evapotranspiration);
+	
+	tempElement = root.GetProperty("shortwave_radiation_sum").EnumerateArray().ElementAt(i);
+	if (tempElement.ValueKind == JsonValueKind.Number) tempElement.TryGetDouble(out shortwaveRadiation);
+
+
+	double rain = totalPrecipitation - snow;
+	string? minTempColor = minTemp <= 5 ? "color: red;" : minTemp <= 10 ? "color: orange;" : "";
+	string? windGustColor = windGusts >= 50 ? "color: red;" : "";
 
 	stringBuilder.Append("<tr>");
 	stringBuilder.Append($"<td>{date}</td>");
