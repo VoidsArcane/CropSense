@@ -24,12 +24,12 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <Label Content="Location"/>
-            <TextBox Name="Location" Width="150"/>
+            <TextBox Name="location" Width="150"/>
         </StackPanel>
 
 		<StackPanel Orientation="Horizontal" Grid.Row="2">
             <Label Content="Forecast Days"/>
-            <ComboBox Name="ForecastDays" SelectedIndex="0">
+            <ComboBox Name="forecast_days" SelectedIndex="0">
 			    <ComboBoxItem>1</ComboBoxItem>
 			    <ComboBoxItem>2</ComboBoxItem>
 			    <ComboBoxItem>3</ComboBoxItem>
@@ -51,18 +51,18 @@
 
 		<StackPanel Orientation="Horizontal" Grid.Row="3">
 			<Label Content="Auto-open Report"/>
-			<CheckBox Name="AutoOpenReport" Content="" IsChecked="False"/>
+			<CheckBox Name="auto_open_report" Content="" IsChecked="False"/>
 		</StackPanel>
 
 		<StackPanel Orientation="Horizontal" Grid.Row="4">
 			<Label Content="Report Path"/>
-    		<TextBox Name="ReportFilePath" Width="250" IsReadOnly="True"/>
+    		<TextBox Name="report_file_path" Width="250" IsReadOnly="True"/>
     		<Button Content="Browse..." Width="70" Click="BrowseButton_Click"/>
 		</StackPanel>
 
 		<StackPanel Orientation="Horizontal" Grid.Row="5">
             <Label Content="Report Type" />
-            <ComboBox Name="ReportType" Width="100" SelectedIndex="0">
+            <ComboBox Name="report_type" Width="100" SelectedIndex="0">
 			    <ComboBoxItem>HTML</ComboBoxItem>
 			    <ComboBoxItem>CSV</ComboBoxItem>
 			</ComboBox>
@@ -72,59 +72,59 @@
 
 		<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" Grid.Row="7">
 			<StackPanel Orientation="Vertical">
-				<CheckBox Name="WeatherCode" Content="Weather Code" IsChecked="False" />
-				<CheckBox Name="MaxTemp" Content="Temperature (max)" IsChecked="True" />
-				<CheckBox Name="MinTemp" Content="Temperature (min)" IsChecked="False" />
-				<CheckBox Name="MeanTemp" Content="Temperature (mean)" IsChecked="False" />
-				<CheckBox Name="Sunrise" Content="Sunrise Time" IsChecked="False" />
-				<CheckBox Name="Sunset" Content="Sunset Time" IsChecked="False" />
-				<CheckBox Name="Daylight" Content="Daylight Duration (h)" IsChecked="False" />	
-				<CheckBox Name="SunshineDuration" Content="Sunshine Duration (h)" IsChecked="False" />
-				<CheckBox Name="MaxUV" Content="UV Index (max)" IsChecked="False" />
-				<CheckBox Name="MaxUVClear" Content="UV Index Clear Sky (max)" IsChecked="False" />
-				<CheckBox Name="RainSum" Content="Rain Sum (mm)" IsChecked="False" />
-				<CheckBox Name="ShowerSum" Content="Showers Sum (mm)" IsChecked="False" />
-				<CheckBox Name="SnowfallSum" Content="Snowfall Sum (mm)" IsChecked="True" />
-				<CheckBox Name="PrecipitationSum" Content="Precipitation Sum (mm)" IsChecked="True" />
-				<CheckBox Name="PrecipitationHours" Content=" Precipitation Hours" IsChecked="False" />
-				<CheckBox Name="PrecipitationProbabilityMax" Content="Precipitation Probability (max)" IsChecked="False" />
-				<CheckBox Name="MaxWindSpeed" Content="Wind Speed (max)" IsChecked="False" />
-				<CheckBox Name="WindGustsMax" Content="Wind Gusts (max)" IsChecked="False" />
-				<CheckBox Name="WindDirection" Content="Dominant Wind Direction" IsChecked="False" />
-				<CheckBox Name="ShortwaveRadiation" Content="Shortwave Radiation Sum" IsChecked="False" />
-				<CheckBox Name="MeanCape" Content="Cape (mean)" IsChecked="False" />
-				<CheckBox Name="MaxCape" Content="Cape (max)" IsChecked="False" />
-				<CheckBox Name="MinCape" Content="Cape (min)" IsChecked="False" />
-				<CheckBox Name="MeanCloudCover" Content="Cloud Cover (mean)" IsChecked="False" />
-				<CheckBox Name="MaxCloudCover" Content="Cloud Cover (max)" IsChecked="False" />
-				<CheckBox Name="MinCloudCover" Content="Cloud Cover (min)" IsChecked="False" />
-				<CheckBox Name="MeanDewPoint" Content="Dew Point (mean)" IsChecked="False" />
-				<CheckBox Name="MaxDewPoint" Content="Dew Point (max)" IsChecked="False" />
-				<CheckBox Name="MinDewPoint" Content="Dew Point (min)" IsChecked="False" />
-				<CheckBox Name="Evapotranspiration" Content="Evapotranspiration" IsChecked="True" />
-				<CheckBox Name="GrowingDegreeDays" Content="Growing Degree days (base 0 | limit 50)" IsChecked="False" />
-				<CheckBox Name="MeanLeafWetnessProbability" Content="Leaf Wetness Probability (mean)" IsChecked="False" />
-				<CheckBox Name="MeanPrecipitationProbability" Content="Precipitation Probability (mean)" IsChecked="False" />
-				<CheckBox Name="MinPrecipitationProbability" Content="Precipitation Probability (min)" IsChecked="False" />
-				<CheckBox Name="MeanRelativeHumidity" Content="Relative Humidity (mean)" IsChecked="False" />
-				<CheckBox Name="MaxRelativeHumidity" Content="Relative Humidity (max)" IsChecked="False" />
-				<CheckBox Name="MinRelativeHumidity" Content="Relative Humidity (min)" IsChecked="False" />
-				<CheckBox Name="SnowfallWaterEquivalentSum" Content="Snowfall water equivalent sum" IsChecked="False" />
-				<CheckBox Name="MeanSeaPressure" Content="Sea Pressure (mean)" IsChecked="True" />
-				<CheckBox Name="MaxSeaPressure" Content="Sea Pressure (max)" IsChecked="False" />
-				<CheckBox Name="MinSeaPressure" Content="Sea Pressure (min)" IsChecked="False" />
-				<CheckBox Name="MeanSurfacePressure" Content="Surface Pressure (mean)" IsChecked="False" />
-				<CheckBox Name="MaxSurfacePressure" Content="Surface Pressure (max)" IsChecked="True" />
-				<CheckBox Name="MinSurfacePressure" Content="Surface Pressure (min)" IsChecked="False" />
-				<CheckBox Name="MaxUpdraft" Content="Updraft (max)" IsChecked="False" />
-				<CheckBox Name="MeanWindGusts" Content="Wind Gusts (mean)" IsChecked="False" />
-				<CheckBox Name="MeanWindSpeed" Content="Wind Speed (mean)" IsChecked="True" />
-				<CheckBox Name="MinWindSpeed" Content="Wind Speed (min)" IsChecked="False" />
-				<CheckBox Name="MinWindGusts" Content="Wind Gusts (min)" IsChecked="False" />
-				<CheckBox Name="MeanWetBulbTemperature" Content="Wet bulb Temperature (mean)" IsChecked="False" />
-				<CheckBox Name="MaxWetBulbTemperature" Content="Wet bulb Temperature (max)" IsChecked="True" />
-				<CheckBox Name="MinWetBulbTemperature" Content="Wet bulb Temperature (min)" IsChecked="False" />	
-				<CheckBox Name="MaxVapourPressureDeficit" Content="Vapour Pressure deficit (max)" IsChecked="False" />
+				<CheckBox Name="weather_code" Content="Weather Code" IsChecked="False" />
+				<CheckBox Name="temperature_2m_max" Content="Temperature (max)" IsChecked="True" />
+				<CheckBox Name="temperature_2m_min" Content="Temperature (min)" IsChecked="False" />
+				<CheckBox Name="temperature_2m_mean" Content="Temperature (mean)" IsChecked="False" />
+				<CheckBox Name="sunrise" Content="Sunrise Time" IsChecked="False" />
+				<CheckBox Name="sunset" Content="Sunset Time" IsChecked="False" />
+				<CheckBox Name="daylight_duration" Content="Daylight Duration (h)" IsChecked="False" />	
+				<CheckBox Name="sunshine_duration" Content="Sunshine Duration (h)" IsChecked="False" />
+				<CheckBox Name="uv_index_max" Content="UV Index (max)" IsChecked="False" />
+				<CheckBox Name="uv_index_clear_sky_max" Content="UV Index Clear Sky (max)" IsChecked="False" />
+				<CheckBox Name="rain_sum" Content="Rain Sum (mm)" IsChecked="False" />
+				<CheckBox Name="showers_sum" Content="Showers Sum (mm)" IsChecked="False" />
+				<CheckBox Name="snowfall_sum" Content="Snowfall Sum (mm)" IsChecked="True" />
+				<CheckBox Name="precipitation_sum" Content="Precipitation Sum (mm)" IsChecked="True" />
+				<CheckBox Name="precipitation_hours" Content=" Precipitation Hours" IsChecked="False" />
+				<CheckBox Name="precipitation_probability_max" Content="Precipitation Probability (max)" IsChecked="False" />
+				<CheckBox Name="wind_speed_10m_max" Content="Wind Speed (max)" IsChecked="False" />
+				<CheckBox Name="wind_gusts_10m_max" Content="Wind Gusts (max)" IsChecked="False" />
+				<CheckBox Name="wind_direction_10m_dominant" Content="Dominant Wind Direction" IsChecked="False" />
+				<CheckBox Name="shortwave_radiation_sum" Content="Shortwave Radiation Sum" IsChecked="False" />
+				<CheckBox Name="cape_mean" Content="Cape (mean)" IsChecked="False" />
+				<CheckBox Name="cape_max" Content="Cape (max)" IsChecked="False" />
+				<CheckBox Name="cape_min" Content="Cape (min)" IsChecked="False" />
+				<CheckBox Name="cloud_cover_mean" Content="Cloud Cover (mean)" IsChecked="False" />
+				<CheckBox Name="cloud_cover_max" Content="Cloud Cover (max)" IsChecked="False" />
+				<CheckBox Name="cloud_cover_min" Content="Cloud Cover (min)" IsChecked="False" />
+				<CheckBox Name="dew_point_2m_mean" Content="Dew Point (mean)" IsChecked="False" />
+				<CheckBox Name="dew_point_2m_max" Content="Dew Point (max)" IsChecked="False" />
+				<CheckBox Name="dew_point_2m_min" Content="Dew Point (min)" IsChecked="False" />
+				<CheckBox Name="et0_fao_evapotranspiration" Content="Evapotranspiration" IsChecked="True" />
+				<CheckBox Name="growing_degree_days_base_0_limit_50" Content="Growing Degree days (base 0 | limit 50)" IsChecked="False" />
+				<CheckBox Name="leaf_wetness_probability_mean" Content="Leaf Wetness Probability (mean)" IsChecked="False" />
+				<CheckBox Name="precipitation_probability_mean" Content="Precipitation Probability (mean)" IsChecked="False" />
+				<CheckBox Name="precipitation_probability_min" Content="Precipitation Probability (min)" IsChecked="False" />
+				<CheckBox Name="relative_humidity_2m_mean" Content="Relative Humidity (mean)" IsChecked="False" />
+				<CheckBox Name="relative_humidity_2m_max" Content="Relative Humidity (max)" IsChecked="False" />
+				<CheckBox Name="relative_humidity_2m_min" Content="Relative Humidity (min)" IsChecked="False" />
+				<CheckBox Name="snowfall_water_equivalent_sum" Content="Snowfall water equivalent sum" IsChecked="False" />
+				<CheckBox Name="pressure_msl_mean" Content="Sea Pressure (mean)" IsChecked="True" />
+				<CheckBox Name="pressure_msl_max" Content="Sea Pressure (max)" IsChecked="False" />
+				<CheckBox Name="pressure_msl_min" Content="Sea Pressure (min)" IsChecked="False" />
+				<CheckBox Name="surface_pressure_mean" Content="Surface Pressure (mean)" IsChecked="False" />
+				<CheckBox Name="surface_pressure_max" Content="Surface Pressure (max)" IsChecked="True" />
+				<CheckBox Name="surface_pressure_min" Content="Surface Pressure (min)" IsChecked="False" />
+				<CheckBox Name="updraft_max" Content="Updraft (max)" IsChecked="False" />
+				<CheckBox Name="wind_gusts_10m_mean" Content="Wind Gusts (mean)" IsChecked="False" />
+				<CheckBox Name="wind_speed_10m_mean" Content="Wind Speed (mean)" IsChecked="True" />
+				<CheckBox Name="wind_speed_10m_min" Content="Wind Speed (min)" IsChecked="False" />
+				<CheckBox Name="wind_gusts_10m_min" Content="Wind Gusts (min)" IsChecked="False" />
+				<CheckBox Name="wet_bulb_temperature_2m_mean" Content="Wet bulb Temperature (mean)" IsChecked="False" />
+				<CheckBox Name="wet_bulb_temperature_2m_max" Content="Wet bulb Temperature (max)" IsChecked="True" />
+				<CheckBox Name="wet_bulb_temperature_2m_min" Content="Wet bulb Temperature (min)" IsChecked="False" />	
+				<CheckBox Name="vapour_pressure_deficit_max" Content="Vapour Pressure deficit (max)" IsChecked="False" />
 			</StackPanel>
 		</ScrollViewer>
 		
