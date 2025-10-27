@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using System.Windows.Forms;
 
 namespace ConfigEditor;
 
@@ -45,53 +46,39 @@ public partial class MainWindow : Window
 				config[section][parts[0].Trim()] = parts[1].Trim();
 			}
 		}
-		
+
 		// Set UI Field Values to current Config Values
 		location.Text = config["general"]["location"];
-
 		forecast_days.SelectedIndex = int.Parse(config["general"]["forecast_days"]) - 1;
-
 		auto_open_report.IsChecked = bool.Parse(config["general"]["auto_open_report"]);
-
 		report_file_path.Text = config["general"]["report_file_path"];
-
 		report_type.SelectedIndex = config["general"]["report_type"].ToUpper() == "HTML" ? 0 : 1;
 
-		
 		Dictionary<string, string> variables = config["include_variables"];
 
 		foreach (KeyValuePair<string, string> entry in variables)
 		{
-			CheckBox variable = (CheckBox)this.FindName(entry.Key);
+			System.Windows.Controls.CheckBox variable = (System.Windows.Controls.CheckBox)this.FindName(entry.Key);
 			variable.IsChecked = bool.Parse(entry.Value);
 		}
 
-
 	}
-
 
 	private void SaveConfig(object sender, RoutedEventArgs e)
 	{
-
 		config["general"]["location"] = location.Text;
-
 		config["general"]["forecast_days"] = forecast_days.SelectedIndex + 1 + "";
-
 		config["general"]["auto_open_report"] = auto_open_report.IsChecked + "";
-
 		config["general"]["report_file_path"] = report_file_path.Text;
-
 		config["general"]["report_type"] = report_type.SelectedIndex == 0 ? "HTML" : "CSV";
-
 
 		Dictionary<string, string> variables = config["include_variables"];
 
 		foreach (KeyValuePair<string, string> entry in variables)
 		{
-			CheckBox variable = (CheckBox)this.FindName(entry.Key);
+			System.Windows.Controls.CheckBox variable = (System.Windows.Controls.CheckBox)this.FindName(entry.Key);
 			variables[entry.Key] = variable.IsChecked != null ? variable.IsChecked + "" : "false";
 		}
-
 
 		string iniPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini");
 		StringBuilder stringBuilder = new StringBuilder();
@@ -107,17 +94,22 @@ public partial class MainWindow : Window
 		}
 
 		System.IO.File.WriteAllText(iniPath, stringBuilder.ToString());
-
-
 	}
-	
-	private void BrowseButton_Click(object sender, RoutedEventArgs e)
-{
-    //OpenFileDialog openFileDialog = new OpenFileDialog();
-    //openFileDialog.Filter = "Config files (*.txt;*.json)|*.txt;*.json|All files (*.*)|*.*";
-    //if (openFileDialog.ShowDialog() == true)
-    //{
-        //ReportFilePath.Text = openFileDialog.FileName;
-    //}
-}
+
+	private void GetOutputPath(object sender, RoutedEventArgs e)
+	{
+		using (var dialog = new FolderBrowserDialog())
+		{
+			dialog.Description = "Select a folder";
+
+			DialogResult result = dialog.ShowDialog();
+
+			if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
+			{
+				string folderPath = dialog.SelectedPath;
+				// Set folder path in your UI field
+				report_file_path.Text = folderPath;
+			}
+		}
+	}
 }

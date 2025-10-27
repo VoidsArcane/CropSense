@@ -9,5 +9,9 @@
 	<OutputPath>..\dist\</OutputPath>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
+  <ItemGroup>
+  	<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
+	<Resource Include="assets\app_icon.ico"/>
+</ItemGroup>
 
 </Project>
