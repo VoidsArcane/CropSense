@@ -8,10 +8,11 @@ CropSense also ships with a visual ConfigEditor for easily setting up the Config
 ## Screenshots
 
 CropSense HTML Report:
-![CropSense Report](screenshots/cropsense.png)
+<img src="screenshots/cropsense.png" width="400">
 
 ConfigEditor Window:
-![ConfigEditor](screenshots/config_editor.png)
+<img src="screenshots/config_editor.png" width="400">
+
 
 
 ## Download Standalone Apps (Windows 10/11)
