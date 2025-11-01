@@ -17,13 +17,13 @@ ConfigEditor: <br> <br>
 
 ## Download Standalone Apps (Windows 10/11)
 
-Download the latest release (both apps and shared config):
+Download the latest release:
 
 [CropSense_Standalone.zip](https://github.com/VoidsArcane/CropSense/releases/tag/v1.0)
 
 
 
-## How to Build from Source (Windows 10/11)
+## Build from Source (Windows 10/11)
 
 1. Install [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
 2. Clone the repository:
