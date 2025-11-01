@@ -19,18 +19,17 @@ Download the latest release (both apps and shared config):
 1. Install [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
 2. Clone the repository:
 	```bash
-   git clone https://github.com/YourUsername/CropSense.git
+   git clone https://github.com/VoidsArcane/CropSense.git
    cd CropSense
 3. Build the projects:
 	```bash
 	dotnet build CropSense/CropSense.csproj -c Release
 	dotnet build ConfigEditor/ConfigEditor.csproj -c Release
-4. The executables will appear in the dist/ folder:
-- dist/CropSense.exe
-- dist/ConfigEditor.exe
+4. The executables will appear in the dist/ folder
 5. Run the apps:
-dotnet run -c Release --project CropSense/CropSense.csproj
-dotnet run -c Release --project ConfigEditor/ConfigEditor.csproje
+	```bash
+	dotnet run -c Release --project CropSense/CropSense.csproj
+	dotnet run -c Release --project ConfigEditor/ConfigEditor.csproje
 
 
 
