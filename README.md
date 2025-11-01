@@ -12,7 +12,7 @@ CropSense HTML Report: <br>
 <img src="screenshots/cropsense.png" width="700"/>
 
 ConfigEditor: <br>
-<img src="screenshots/config_editor.png" width="500"/>
+<img src="screenshots/config_editor.png" width="600"/>
 
 
 
