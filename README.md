@@ -8,10 +8,10 @@ CropSense also ships with a visual ConfigEditor for easily setting up the Config
 ## Screenshots
 
 CropSense HTML Report:
-<img src="screenshots/cropsense.png" width="400">
+<img src="screenshots/cropsense.png" width="200"/>
 
 ConfigEditor Window:
-<img src="screenshots/config_editor.png" width="400">
+<img src="screenshots/config_editor.png" width="200"/>
 
 
 
