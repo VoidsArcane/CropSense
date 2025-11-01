@@ -47,7 +47,7 @@ Download the latest release (both apps and shared config):
 
 
 ## Include Variables
-### All variables can take true/false values, if true is set the variable will be included in report. At least one variable should be included
+- All variables can take true/false values, if true is set the variable will be included in report. At least one variable should be included
 | Field                          | Unit     | Description                              | 
 |--------------------------------|----------|------------------------------------------|
 | weather_code                   | WMO code | Most severe weather condition of the day |
