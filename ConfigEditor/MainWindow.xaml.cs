@@ -19,7 +19,7 @@ namespace ConfigEditor;
 
 public partial class MainWindow : Window
 {
-	string CONFIG_PATH = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini");
+	string CONFIG_PATH = System.IO.Path.Combine(Directory.GetParent(AppContext.BaseDirectory.TrimEnd(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar)).FullName, "config.ini");
 	private Dictionary<string, string> generalSettings;
 	private Dictionary<string, string> variableSettings;
 
@@ -131,7 +131,7 @@ public partial class MainWindow : Window
 	{
 		if (!File.Exists(CONFIG_PATH))
 		{
-			DisplayFatalErrorMessage("Config File not found in /dist folder");
+			DisplayFatalErrorMessage($"Config File not found in {CONFIG_PATH} folder");
 		}
 
 		var lines = File.ReadAllLines(CONFIG_PATH);

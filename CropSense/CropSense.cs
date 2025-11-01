@@ -8,7 +8,8 @@ using System.Net;
 ////////////////////////////
 ///    PARSING CONFIG   ///
 ///////////////////////////
-string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini");
+string configPath = Path.Combine(Directory.GetParent(AppContext.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)).FullName, "config.ini");
+
 
 if (!File.Exists(configPath))
 {
