@@ -80,12 +80,11 @@ StringBuilder valuesMissing = new StringBuilder();
 if (string.IsNullOrWhiteSpace(generalSettings["location"])) valuesMissing.Append("location, ");
 if (string.IsNullOrWhiteSpace(generalSettings["forecast_days"])) valuesMissing.Append("forecast_days, ");
 if (string.IsNullOrWhiteSpace(generalSettings["auto_open_report"])) valuesMissing.Append("auto_open_report, ");
-if (string.IsNullOrWhiteSpace(generalSettings["report_file_path"])) valuesMissing.Append("report_file_path, ");
 if (string.IsNullOrWhiteSpace(generalSettings["report_type"])) valuesMissing.Append("report_type");
 
 if (valuesMissing.Length > 0)
 {
-	Console.Error.WriteLine($"Config: following values not found\n[{valuesMissing}]");
+	Console.Error.WriteLine($"Config: following fields have no value \n[{valuesMissing}]");
 	Environment.Exit(1);
 }
 
@@ -104,12 +103,6 @@ if (!bool.TryParse(generalSettings["auto_open_report"], out bool AutoOpenReport)
 }
 
 // Validating value correctness
-if (!Directory.Exists(generalSettings["report_file_path"]))
-{
-	Console.Error.WriteLine("report_file_path can't be found");
-	Environment.Exit(1);
-}
-
 if (ForecastDays < 1 || ForecastDays > 14)
 {
 	Console.Error.WriteLine("forecast_days is outside the range of 1-14");
@@ -151,7 +144,6 @@ if (variablesIncluded.Count == 0)
 //////////////////////////////////////
 string location = Uri.EscapeDataString(generalSettings["location"]);
 
-
 using HttpClient client = new HttpClient();
 HttpResponseMessage response = await client.GetAsync($"https://geocoding-api.open-meteo.com/v1/search?name={location}&count=1&language=en");
 try
@@ -165,7 +157,6 @@ catch (HttpRequestException exception)
 }
 
 string locationData = await response.Content.ReadAsStringAsync();
-
 
 JsonDocument responseDocument;
 try
@@ -182,9 +173,10 @@ catch (JsonException ex)
 using JsonDocument locationJSON = responseDocument;
 
 
+
 if (!locationJSON.RootElement.TryGetProperty("results", out JsonElement coordinates))
 {
-	Console.Error.WriteLine("Location Coordinate Fetch Request Failed. 'results' property doesn't exist.");
+	Console.Error.WriteLine("Location not found. Please try a simpler name.");
 	Environment.Exit(1);
 }
 
@@ -192,6 +184,11 @@ if (!coordinates.EnumerateArray().Any())
 {
 	Console.Error.WriteLine("Coordinate array has no Items.");
 	Environment.Exit(1);
+}
+
+if (coordinates.EnumerateArray().Count() > 1)
+{
+	Console.Error.WriteLine("Location too vague, add specifier eg. 'US' etc. ");
 }
 
 coordinates = coordinates.EnumerateArray().ElementAt(0);
@@ -358,6 +355,12 @@ if (time_result.EnumerateArray().Count() <= 0)
 }
 
 string ReportFilePath = generalSettings["report_file_path"];
+
+if (!Directory.Exists(generalSettings["report_file_path"]))
+{
+	ReportFilePath = AppDomain.CurrentDomain.BaseDirectory;
+}
+
 string date = time_result.EnumerateArray().ElementAt(0).GetString() ?? "Unkown_Date";
 foreach (char c in Path.GetInvalidFileNameChars())
     date = date.Replace(c, '_');
