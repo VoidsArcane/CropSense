@@ -9,7 +9,7 @@ The package also includes a visual ConfigEditor for easy configuration setup.
 ## Screenshots
 
 CropSense HTML Report: <br>
-<img src="screenshots/cropsense.png" width="500"/>
+<img src="screenshots/cropsense.png" width="700"/>
 
 ConfigEditor: <br>
 <img src="screenshots/config_editor.png" width="500"/>
