@@ -5,6 +5,14 @@ CropSense is run as an executable or from the console, reads a user-defined Conf
 
 CropSense also ships with a visual ConfigEditor for easily setting up the Config file.
 
+## Screenshots
+
+CropSense HTML Report:
+![CropSense Report](screenshots/cropsense.png)
+
+ConfigEditor Window:
+![ConfigEditor](screenshots/config_editor.png)
+
 
 ## Download Standalone Apps (Windows 10/11)
 
@@ -47,7 +55,7 @@ Download the latest release (both apps and shared config):
 
 
 ## Include Variables
-#### All variables can take true/false values, if true is set the variable will be included in report. At least one variable should be included
+#### All variables can take true/false values, if true is set the variable will be included in report. At least one variable should be included.
 | Field                          | Unit     | Description                              | 
 |--------------------------------|----------|------------------------------------------|
 | weather_code                   | WMO code | Most severe weather condition of the day |
