@@ -23,7 +23,7 @@ Download the latest release:
 
 
 
-## Build from Source (Windows 10/11)
+## How to Build from Source (Windows 10/11)
 
 1. Install [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
 2. Clone the repository:
@@ -43,7 +43,7 @@ Download the latest release:
 	dotnet run -c Release --project ConfigEditor/ConfigEditor.csproj
 	```
 
-# Config Section Info
+# Config Setting Info
 
 ## General
 | Field            | Format     | Description                                         |
