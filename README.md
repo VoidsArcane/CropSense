@@ -1,16 +1,17 @@
 # CropSense
-CropSense is a desktop tool for hobbyist gardeners that automatically collects and presents weather data in a visual form to be able to easily spot key conditions like frost and wind gusts. It uses the Open-Meteo API and its Geocoding API.
+CropSense is a desktop tool for hobbyist gardeners that automatically collects and presents weather data in a visual form to make key conditions like frost or wind gusts easy to spot. It uses the Open-Meteo API and its corresponding Geocoding API.
 
-CropSense is run as an executable or from the console, reads a user-defined Config file and generates an HTML or CSV report.
+CropSense can be run as a console app or standalone executable, reading a user-defined config file to generate HTML or CSV reports.
 
-CropSense also ships with a visual ConfigEditor for easily setting up the Config file.
+The package also includes a visual ConfigEditor for easy configuration setup.
+
 
 ## Screenshots
 
 CropSense HTML Report: <br>
 <img src="screenshots/cropsense.png" width="500"/>
 
-ConfigEditor Window: <br>
+ConfigEditor: <br>
 <img src="screenshots/config_editor.png" width="500"/>
 
 
