@@ -8,12 +8,11 @@ The package also includes a visual ConfigEditor for easy configuration setup.
 
 ## Screenshots
 
-CropSense HTML Report: <br>
+CropSense Report: <br> <br>
 <img src="screenshots/cropsense.png" width="700"/>
 
-ConfigEditor: <br>
+ConfigEditor: <br> <br>
 <img src="screenshots/config_editor.png" width="600"/>
-
 
 
 ## Download Standalone Apps (Windows 10/11)
