@@ -10,7 +10,7 @@ CropSense also ships with a visual ConfigEditor for easily setting up the Config
 
 Download the latest release (both apps and shared config):
 
-[CropSense_Standalone.zip](https://github.com/VoidsArcane/CropSense/releases/latest/download/CropSense_Standalone.zip)
+[CropSense_Standalone.zip](https://github.com/VoidsArcane/CropSense/releases/tag/v1.0)
 
 
 
