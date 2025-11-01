@@ -29,7 +29,7 @@ Download the latest release (both apps and shared config):
 5. Run the apps:
 	```bash
 	dotnet run -c Release --project CropSense/CropSense.csproj
-	dotnet run -c Release --project ConfigEditor/ConfigEditor.csproje
+	dotnet run -c Release --project ConfigEditor/ConfigEditor.csproj
 
 
 
