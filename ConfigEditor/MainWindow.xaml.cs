@@ -136,17 +136,18 @@ public partial class MainWindow : Window
 
 		var lines = File.ReadAllLines(CONFIG_PATH);
 		string section = "";
-		Dictionary<string, Dictionary<string, string>> config = [];
+		var config = new Dictionary<string, Dictionary<string, string>>();
+
 
 		foreach (var line in lines)
 		{
 			string trimmed = line.Trim();
 			if (trimmed.StartsWith("[") && trimmed.EndsWith("]"))
 			{
-				section = trimmed[1..^1];
+				section = trimmed[1..^1].Trim();
 				config[section] = new Dictionary<string, string>();
 			}
-			else if (trimmed.Contains('=') && !trimmed.StartsWith(";"))
+			else if (trimmed.Contains('=') && !trimmed.StartsWith(";") && config.Count != 0)
 			{
 				var parts = trimmed.Split('=', 2);
 				config[section][parts[0].Trim()] = parts[1].Trim();

@@ -93,47 +93,27 @@
 				<CheckBox Name="uv_index_clear_sky_max" Content="UV Index Clear Sky (max)"/>
 				<CheckBox Name="rain_sum" Content="Rain Sum (mm)"/>
 				<CheckBox Name="showers_sum" Content="Showers Sum (mm)"/>
-				<CheckBox Name="snowfall_sum" Content="Snowfall Sum (mm)"/>
+				<CheckBox Name="snowfall_sum" Content="Snowfall Sum (cm)"/>
 				<CheckBox Name="precipitation_sum" Content="Precipitation Sum (mm)"/>
 				<CheckBox Name="precipitation_hours" Content="Precipitation Hours"/>
+				<CheckBox Name="precipitation_probability_mean" Content="Precipitation Probability (mean)"/>
 				<CheckBox Name="precipitation_probability_max" Content="Precipitation Probability (max)"/>
+				<CheckBox Name="precipitation_probability_min" Content="Precipitation Probability (min)"/>
+				<CheckBox Name="wind_speed_10m_mean" Content="Wind Speed (mean)"/>
 				<CheckBox Name="wind_speed_10m_max" Content="Wind Speed (max)"/>
+				<CheckBox Name="wind_speed_10m_min" Content="Wind Speed (min)"/>
+				<CheckBox Name="wind_gusts_10m_mean" Content="Wind Gusts (mean)"/>
 				<CheckBox Name="wind_gusts_10m_max" Content="Wind Gusts (max)"/>
-				<CheckBox Name="wind_direction_10m_dominant" Content="Dominant Wind Direction"/>
-				<CheckBox Name="shortwave_radiation_sum" Content="Shortwave Radiation Sum"/>
-				<CheckBox Name="cape_mean" Content="Cape (mean)"/>
-				<CheckBox Name="cape_max" Content="Cape (max)"/>
-				<CheckBox Name="cape_min" Content="Cape (min)"/>
+				<CheckBox Name="wind_gusts_10m_min" Content="Wind Gusts (min)"/>
+				<CheckBox Name="wind_direction_10m_dominant" Content="Dominant Wind Direction (degrees)"/>
+				<CheckBox Name="shortwave_radiation_sum" Content="Shortwave Radiation Sum (MJ/m^2)"/>
 				<CheckBox Name="cloud_cover_mean" Content="Cloud Cover (mean)"/>
 				<CheckBox Name="cloud_cover_max" Content="Cloud Cover (max)"/>
 				<CheckBox Name="cloud_cover_min" Content="Cloud Cover (min)"/>
-				<CheckBox Name="dew_point_2m_mean" Content="Dew Point (mean)"/>
-				<CheckBox Name="dew_point_2m_max" Content="Dew Point (max)"/>
-				<CheckBox Name="dew_point_2m_min" Content="Dew Point (min)"/>
-				<CheckBox Name="et0_fao_evapotranspiration" Content="Evapotranspiration"/>
-				<CheckBox Name="growing_degree_days_base_0_limit_50" Content="Growing Degree days (base 0 | limit 50)"/>
-				<CheckBox Name="leaf_wetness_probability_mean" Content="Leaf Wetness Probability (mean)"/>
-				<CheckBox Name="precipitation_probability_mean" Content="Precipitation Probability (mean)"/>
-				<CheckBox Name="precipitation_probability_min" Content="Precipitation Probability (min)"/>
+				<CheckBox Name="et0_fao_evapotranspiration" Content="Evapotranspiration (mm)"/>
 				<CheckBox Name="relative_humidity_2m_mean" Content="Relative Humidity (mean)"/>
 				<CheckBox Name="relative_humidity_2m_max" Content="Relative Humidity (max)"/>
 				<CheckBox Name="relative_humidity_2m_min" Content="Relative Humidity (min)"/>
-				<CheckBox Name="snowfall_water_equivalent_sum" Content="Snowfall water equivalent sum"/>
-				<CheckBox Name="pressure_msl_mean" Content="Sea Pressure (mean)"/>
-				<CheckBox Name="pressure_msl_max" Content="Sea Pressure (max)"/>
-				<CheckBox Name="pressure_msl_min" Content="Sea Pressure (min)"/>
-				<CheckBox Name="surface_pressure_mean" Content="Surface Pressure (mean)"/>
-				<CheckBox Name="surface_pressure_max" Content="Surface Pressure (max)"/>
-				<CheckBox Name="surface_pressure_min" Content="Surface Pressure (min)"/>
-				<CheckBox Name="updraft_max" Content="Updraft (max)"/>
-				<CheckBox Name="wind_gusts_10m_mean" Content="Wind Gusts (mean)"/>
-				<CheckBox Name="wind_speed_10m_mean" Content="Wind Speed (mean)"/>
-				<CheckBox Name="wind_speed_10m_min" Content="Wind Speed (min)"/>
-				<CheckBox Name="wind_gusts_10m_min" Content="Wind Gusts (min)"/>
-				<CheckBox Name="wet_bulb_temperature_2m_mean" Content="Wet bulb Temperature (mean)"/>
-				<CheckBox Name="wet_bulb_temperature_2m_max" Content="Wet bulb Temperature (max)"/>
-				<CheckBox Name="wet_bulb_temperature_2m_min" Content="Wet bulb Temperature (min)"/>	
-				<CheckBox Name="vapour_pressure_deficit_max" Content="Vapour Pressure deficit (max)"/>
 			</StackPanel>
 		</ScrollViewer>
 		
