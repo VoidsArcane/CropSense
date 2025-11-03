@@ -22,7 +22,6 @@ Download the latest release:
 [CropSense.zip](https://github.com/VoidsArcane/CropSense/releases/tag/v1.0.1)
 
 
-
 ## How to Build from Source (Windows 10/11)
 
 1. Install [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
