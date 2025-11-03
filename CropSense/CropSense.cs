@@ -314,6 +314,9 @@ if (ReportType == "HTML")
 	stringBuilder.AppendLine("<!DOCTYPE html>\n<head>\n<meta charset=\"UTF-8\"/>");
 	stringBuilder.AppendLine("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>");
 	stringBuilder.AppendLine("<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css\">");
+	string iconPath = Path.Combine(AppContext.BaseDirectory, "assets", "app_icon.ico");
+
+	stringBuilder.AppendLine($"<link rel=\"icon\" type=\"image/x-icon\" href={WebUtility.HtmlEncode(iconPath)}>");
 	stringBuilder.AppendLine("<title>CropSense</title>");
 	stringBuilder.AppendLine("</head>\n<body>");
 	stringBuilder.AppendLine("<table class=\"table table-striped table-hover table-bordered\">");
