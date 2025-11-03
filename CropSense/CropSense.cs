@@ -54,8 +54,7 @@ internal class Program
 
 		if (!config.ContainsKey("include_variables"))
 		{
-			Console.Error.WriteLine("Config does not contain a include_variables section");
-			Environment.Exit(1);
+			ExitOnError("Config does not contain a include_variables section");
 		}
 
 		Dictionary<string, string> generalSettings = config["general"];
@@ -73,8 +72,7 @@ internal class Program
 
 		if (fieldsMissing.Length > 0)
 		{
-			Console.Error.WriteLine($"Config: following fields not found\n[{fieldsMissing}]");
-			Environment.Exit(1);
+			ExitOnError($"Config: following fields not found\n[{fieldsMissing}]");
 		}
 
 		// Validating Values
@@ -87,42 +85,36 @@ internal class Program
 
 		if (valuesMissing.Length > 0)
 		{
-			Console.Error.WriteLine($"Config: following fields have no value \n[{valuesMissing}]");
-			Environment.Exit(1);
+			ExitOnError($"Config: following fields have no value \n[{valuesMissing}]");
 		}
 
 		// Validating Value Format
 
 		if (!int.TryParse(generalSettings["forecast_days"], out int ForecastDays))
 		{
-			Console.Error.WriteLine($"forecast_days could not be parsed (value: {generalSettings["forecast_days"]}, expected: int)");
-			Environment.Exit(1);
+			ExitOnError($"forecast_days could not be parsed (value: {generalSettings["forecast_days"]}, expected: int)");
 		}
 
 		if (!bool.TryParse(generalSettings["auto_open_report"], out bool AutoOpenReport))
 		{
-			Console.Error.WriteLine($"auto_open_report value could not be parsed (value: {generalSettings["auto_open_report"]} , expected: true/false)");
-			Environment.Exit(1);
+			ExitOnError($"auto_open_report value could not be parsed (value: {generalSettings["auto_open_report"]} , expected: true/false)");
 		}
 
 		// Validating value correctness
 		if (ForecastDays < 1 || ForecastDays > 14)
 		{
-			Console.Error.WriteLine("forecast_days is outside the range of 1-14");
-			Environment.Exit(1);
+			ExitOnError("forecast_days is outside the range of 1-14");
 		}
 
 		if (generalSettings["report_type"] != "HTML" && generalSettings["report_type"] != "CSV")
 		{
-			Console.Error.WriteLine($"Report Type has incorrect value (value: {generalSettings["report_type"]} , expected: HTML/CSV)");
-			Environment.Exit(1);
+			ExitOnError($"Report Type has incorrect value (value: {generalSettings["report_type"]} , expected: HTML/CSV)");
 		}
 
 		// Validating Variables Included
 		if (variableSettings.Count == 0)
 		{
-			Console.Error.WriteLine("include variables has no fields");
-			Environment.Exit(1);
+			ExitOnError("include variables has no fields");
 		}
 
 		List<string> variablesIncluded = new List<string>();
@@ -137,8 +129,7 @@ internal class Program
 
 		if (variablesIncluded.Count == 0)
 		{
-			Console.Error.WriteLine("No Variables selected to be included in Config file");
-			Environment.Exit(1);
+			ExitOnError("No Variables selected to be included in Config file");
 		}
 
 
@@ -155,8 +146,7 @@ internal class Program
 		}
 		catch (HttpRequestException exception)
 		{
-			Console.Error.WriteLine($"Fetching Location Coordinates failed.\nException: {exception} ");
-			Environment.Exit(1);
+			ExitOnError($"Fetching Location Coordinates failed.\nException: {exception} ");
 		}
 
 		string locationData = await response.Content.ReadAsStringAsync();
@@ -168,8 +158,7 @@ internal class Program
 		}
 		catch (JsonException ex)
 		{
-			Console.Error.WriteLine($"Failed to parse location JSON: {ex.Message}");
-			Environment.Exit(1);
+			ExitOnError($"Failed to parse location JSON: {ex.Message}");
 			throw;
 		}
 
@@ -179,45 +168,39 @@ internal class Program
 
 		if (!locationJSON.RootElement.TryGetProperty("results", out JsonElement coordinates))
 		{
-			Console.Error.WriteLine("Location not found. Please try a simpler name.");
-			Environment.Exit(1);
+			ExitOnError("Location not found. Please try a simpler name.");
 		}
 
 		if (!coordinates.EnumerateArray().Any())
 		{
-			Console.Error.WriteLine("Coordinate array has no Items.");
-			Environment.Exit(1);
+			ExitOnError("Coordinate array has no Items.");
 		}
 
 		if (coordinates.EnumerateArray().Count() > 1)
 		{
-			Console.Error.WriteLine("Location too vague, add specifier eg. 'US' etc. ");
+			ExitOnError("Location too vague, add specifier eg. 'US' etc. ");
 		}
 
 		coordinates = coordinates.EnumerateArray().ElementAt(0);
 
 		if (!coordinates.TryGetProperty("latitude", out JsonElement latitude_result))
 		{
-			Console.Error.WriteLine("'latitude' property doesn't exist.");
-			Environment.Exit(1);
+			ExitOnError("'latitude' property doesn't exist.");
 		}
 
 		if (!latitude_result.TryGetDouble(out double latitude))
 		{
-			Console.Error.WriteLine("'latitude' property doesn't contain a double.");
-			Environment.Exit(1);
+			ExitOnError("'latitude' property doesn't contain a double.");
 		}
 
 		if (!coordinates.TryGetProperty("longitude", out JsonElement longitude_result))
 		{
-			Console.Error.WriteLine("'longitude' property doesn't exist.");
-			Environment.Exit(1);
+			ExitOnError("'longitude' property doesn't exist.");
 		}
 
 		if (!longitude_result.TryGetDouble(out double longitude))
 		{
-			Console.Error.WriteLine("'longitude' property doesn't contain a double.");
-			Environment.Exit(1);
+			ExitOnError("'longitude' property doesn't contain a double.");
 		}
 
 
@@ -234,8 +217,7 @@ internal class Program
 		}
 		catch (HttpRequestException exception)
 		{
-			Console.Error.WriteLine($"Fetching Forecast Data failed.\nException: {exception} ");
-			Environment.Exit(1);
+			ExitOnError($"Fetching Forecast Data failed.\nException: {exception} ");
 		}
 
 		string json = await response.Content.ReadAsStringAsync();
@@ -246,16 +228,14 @@ internal class Program
 		}
 		catch (JsonException ex)
 		{
-			Console.Error.WriteLine($"Failed to parse forecast JSON: {ex.Message}");
-			Environment.Exit(1);
+			ExitOnError($"Failed to parse forecast JSON: {ex.Message}");
 		}
 
 		using JsonDocument doc = responseDocument;
 
 		if (!doc.RootElement.TryGetProperty("daily", out JsonElement root))
 		{
-			Console.Error.WriteLine("'daily' property doesn't exist");
-			Environment.Exit(1);
+			ExitOnError("'daily' property doesn't exist");
 		}
 
 		// Extracting Variables
@@ -350,14 +330,12 @@ internal class Program
 
 		if (!root.TryGetProperty("time", out JsonElement time_result))
 		{
-			Console.Error.WriteLine("'time' property doesn't exist");
-			Environment.Exit(1);
+			ExitOnError("'time' property doesn't exist");
 		}
 
 		if (time_result.EnumerateArray().Count() <= 0)
 		{
-			Console.Error.WriteLine("'time' property doesn't contain elements");
-			Environment.Exit(1);
+			ExitOnError("'time' property doesn't contain elements");
 		}
 
 		string ReportFilePath = generalSettings["report_file_path"];
@@ -381,8 +359,7 @@ internal class Program
 		}
 		catch (Exception ex) when (ex is UnauthorizedAccessException || ex is IOException || ex is ArgumentException)
 		{
-			Console.Error.WriteLine($"Failed to write report to '{OutputFilePath}': {ex.Message}");
-			Environment.Exit(1);
+			ExitOnError($"Failed to write report to '{OutputFilePath}': {ex.Message}");
 		}
 
 
