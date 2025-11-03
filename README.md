@@ -19,7 +19,7 @@ ConfigEditor: <br> <br>
 
 Download the latest release:
 
-[CropSense_Standalone.zip](https://github.com/VoidsArcane/CropSense/releases/tag/v1.0)
+[CropSense_Standalone.zip](https://github.com/VoidsArcane/CropSense/releases/tag/v1.0.1)
 
 
 
